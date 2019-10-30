@@ -1,0 +1,21 @@
+- Progress bar
+- Info points
+- Reset when I sped money
+
+   'T-shirt',
+   'Shirt',
+   'Socks',
+   'Shoes',
+   'Trainers',
+   'Scarf',
+   'Panties',
+   'Belt',
+   'Boots',
+   'Shorts',
+   'Jeans',
+   'Skirt',
+   'Sandals',
+   'Cap',
+   'Hat',
+   'Gloves',
+   'Jacket',
