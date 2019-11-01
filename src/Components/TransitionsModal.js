@@ -1,17 +1,8 @@
 import React from 'react';
-import { Modal, Fade, Backdrop, makeStyles } from '@material-ui/core';
-
-
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import {
+  Button, Dialog, DialogActions, DialogContent,
+  DialogTitle, TextField, makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -48,43 +39,53 @@ export default function TransitionsModal(props) {
   const handleChange = event => {
     setAge(Number(event.target.value) || '');
   };
-
+  
   const handleOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
+  const sendQuantity = age => {
+    console.log('Send quantity ' + age);
+
+  }
 
   return (
     <div>
-      <img onClick={handleOpen} className={classes.img} src={cloth.picture} />
+      <img
+        className={classes.img}
+        onClick={handleOpen}
+        src={cloth.picture}
+        alt={cloth.name}
+      />
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>
-          <h3 id="transition-modal-title">Are you sure you want to lose a {cloth.name}</h3>
-          <p id="transition-modal-description">You have lose {cloth.total} {cloth.name}s</p>
+          <div>
+            <h3>You want to lose a {cloth.name}</h3>
+            <h3>Are you sure?</h3>
+            <p>You have lose {cloth.total} {cloth.name}s</p>
+          </div>
         </DialogTitle>
         <DialogContent>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-dialog-select-label">Quantity</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={age}
-                onChange={handleChange}
-                input={<Input />}
-              >
-                <MenuItem value={10}>1</MenuItem>
-                <MenuItem value={20}>2</MenuItem>
-                <MenuItem value={30}>3</MenuItem>
-              </Select>
-            </FormControl>
-          </form>
+          <TextField
+            id="outlined-full-width"
+            label="Quantity"
+            type="Number"
+            style={{ margin: 8 }}
+            placeholder="4"
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="outlined"
+            value={age}
+            onChange={handleChange}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">Count</Button>
+          <Button onClick={() => sendQuantity(age)} color="primary">Count</Button>
           <Button onClick={handleClose} color="primary">No way</Button>
         </DialogActions>
       </Dialog>
