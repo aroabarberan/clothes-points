@@ -39,11 +39,11 @@ export default function TransitionsModal(props) {
   const handleChange = event => {
     setAge(Number(event.target.value) || '');
   };
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };

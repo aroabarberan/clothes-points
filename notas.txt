@@ -1,6 +1,7 @@
 - Progress bar
 - Info points
 - Reset when I sped money
+- add grafics for each cloth groups
 
    'T-shirt',
    'Shirt',
@@ -19,3 +20,6 @@
    'Hat',
    'Gloves',
    'Jacket',
+
+   gupos: camisetas, pantalones, accesorios,
+   zapatos, chaquetas
