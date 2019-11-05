@@ -34,10 +34,10 @@ export default function TransitionsModal(props) {
   const classes = useStyles();
   const cloth = props.cloth;
   const [open, setOpen] = React.useState(false);
-  const [age, setAge] = React.useState('');
+  const [quantity, setQuantity] = React.useState('');
 
   const handleChange = event => {
-    setAge(Number(event.target.value) || '');
+    setQuantity(Number(event.target.value) || '');
   };
 
   const handleOpen = () => {
@@ -47,9 +47,9 @@ export default function TransitionsModal(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const sendQuantity = age => {
-    console.log('Send quantity ' + age);
-
+  const sendQuantity = quantity => {
+    console.log('Send quantity ' + quantity);
+    handleClose();
   }
 
   return (
@@ -80,12 +80,12 @@ export default function TransitionsModal(props) {
               shrink: true,
             }}
             variant="outlined"
-            value={age}
+            value={quantity}
             onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => sendQuantity(age)} color="primary">Count</Button>
+          <Button onClick={() => sendQuantity(quantity)} color="primary">Count</Button>
           <Button onClick={handleClose} color="primary">No way</Button>
         </DialogActions>
       </Dialog>

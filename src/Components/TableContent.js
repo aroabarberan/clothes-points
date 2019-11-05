@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  Table, TableBody, TableCell,
-  TableRow, Paper, makeStyles
+  Table, TextField, TableHead, TableBody, TableCell,
+  TableRow, Paper, makeStyles, Button
 } from '@material-ui/core';
 
 import TransitionsModal from './TransitionsModal';
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 function createCloth(id, name, picture, points, limit, total) {
-  return { name, picture, points, limit, total }
+  return { id, name, picture, points, limit, total }
 }
 
 const rows = [
@@ -33,11 +33,31 @@ const rows = [
 
 export default function TableContent() {
   const classes = useStyles();
+  const [quantity, setQuantity] = React.useState('');
+
+  const handleChange = event => {
+    console.log('modify ' + event.target.value)
+    setQuantity(Number(event.target.value) || '');
+  };
+
+  const sendQuantity = (id, quantity) => {
+    console.log('id ' + id + ' Send quantity ' + quantity);
+  }
 
   return (
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label='simple table'>
-        <TableBody>
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="inherit">Cloth</TableCell>
+            <TableCell align="inherit">Trash</TableCell>
+            <TableCell align="center">Quantity to remove</TableCell>
+            <TableCell align="left">€</TableCell>
+            <TableCell align="left"></TableCell>
+          </TableRow>
+        </TableHead>
+        {/* <TableBody>
           {rows.map(row => (
             <TableRow >
               <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
@@ -45,7 +65,40 @@ export default function TableContent() {
               <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
               <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
               <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
+            </TableRow>
+          ))}
+        </TableBody> */}
+        <TableBody>
+          {rows.map(row => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <img
+                  style={{ height: 70, width: 70 }}
+                  src={row.picture}
+                  alt={row.name}
+                />
+              </TableCell>
+              <TableCell align="inherit">{row.name}</TableCell>
+              <TableCell aling="inherit">&nbsp;{row.total}</TableCell>
+
+              <TableCell style={{ textAlign: 'center', width: '50%' }}>
+                <TextField
+                  id="outlined-full-width"
+                  type="Number"
+                  placeholder="4"
+                  margin="normal"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={quantity}
+                  onChange={handleChange}
+                />
+              </TableCell>
+              <TableCell aling="left">{row.points}</TableCell>
+              <TableCell aling="left">
+                <Button color="primary" onClick={() => sendQuantity(row.id, quantity)}>send</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
