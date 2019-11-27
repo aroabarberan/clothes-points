@@ -1,12 +1,30 @@
 import React from 'react';
 import {
-  Table, TextField, TableHead, TableBody, TableCell,
+  Table, Fab, TableHead, TableBody, TableCell,
   TableRow, Paper, makeStyles, Button
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
-import TransitionsModal from './TransitionsModal';
+import * as firebase from "firebase/app";
 
-const useStyles = makeStyles({
+const firebaseConfig = {
+  apiKey: "AIzaSyDRNwCTxL4SY0SURTapYQNP49ajIHNOL5g",
+  authDomain: "clothes-point.firebaseapp.com",
+  databaseURL: "https://clothes-point.firebaseio.com",
+  projectId: "clothes-point",
+  storageBucket: "clothes-point.appspot.com",
+  messagingSenderId: "560717171334",
+  appId: "1:560717171334:web:697efbdd441932980cdf07",
+  measurementId: "G-M0030HXHXD"
+};
+
+const database = firebase.firestore;
+console.log(database);
+
+firebase.initializeApp(firebaseConfig);
+
+const useStyles = makeStyles( theme => ({
   root: {
     overflowX: 'auto',
     marginTop: 100,
@@ -15,7 +33,10 @@ const useStyles = makeStyles({
   table: {
     minWidth: 100,
   },
-});
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
 
 function createCloth(id, name, picture, points, limit, total) {
   return { id, name, picture, points, limit, total }
@@ -33,16 +54,16 @@ const rows = [
 
 export default function TableContent() {
   const classes = useStyles();
-  const [quantity, setQuantity] = React.useState('');
+  // const [quantity, setQuantity] = React.useState('');
 
-  const handleChange = event => {
-    console.log('modify ' + event.target.value)
-    setQuantity(Number(event.target.value) || '');
-  };
+  // const handleChange = event => {
+  //   console.log('modify ' + event.target.value)
+  //   setQuantity(Number(event.target.value) || '');
+  // };
 
-  const sendQuantity = (id, quantity) => {
-    console.log('id ' + id + ' Send quantity ' + quantity);
-  }
+  // const sendQuantity = (id, quantity) => {
+  //   console.log('id ' + id + ' Send quantity ' + quantity);
+  // }
 
   return (
     <Paper className={classes.root}>
@@ -52,22 +73,10 @@ export default function TableContent() {
             <TableCell></TableCell>
             <TableCell align="inherit">Cloth</TableCell>
             <TableCell align="inherit">Trash</TableCell>
-            <TableCell align="center">Quantity to remove</TableCell>
-            <TableCell align="left">€</TableCell>
-            <TableCell align="left"></TableCell>
+            <TableCell align="center">add/remove</TableCell>
+            <TableCell align="left">points</TableCell>
           </TableRow>
         </TableHead>
-        {/* <TableBody>
-          {rows.map(row => (
-            <TableRow >
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-              <TableCell key={row.id} aling='inherit'><TransitionsModal cloth={row} /></TableCell>
-            </TableRow>
-          ))}
-        </TableBody> */}
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
@@ -82,25 +91,23 @@ export default function TableContent() {
               <TableCell aling="inherit">&nbsp;{row.total}</TableCell>
 
               <TableCell style={{ textAlign: 'center', width: '50%' }}>
-                <TextField
-                  id="outlined-full-width"
-                  type="Number"
-                  placeholder="4"
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={quantity}
-                  onChange={handleChange}
-                />
+                <Fab size="small" color="primary" aria-label="add" className={classes.margin}>
+                  <AddIcon />
+                </Fab>
+                <Fab size="small" color="primary" aria-label="add" className={classes.margin}>
+                  <RemoveIcon />
+                </Fab>
               </TableCell>
               <TableCell aling="left">{row.points}</TableCell>
-              <TableCell aling="left">
-                <Button color="primary" onClick={() => sendQuantity(row.id, quantity)}>send</Button>
-              </TableCell>
             </TableRow>
           ))}
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell align="right" colSpan={0}>My Wallet</TableCell>
+            <TableCell rowSpan={1} />
+            <TableCell align="left">444</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </Paper>
